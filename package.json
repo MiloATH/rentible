@@ -1,0 +1,15 @@
+{
+  "name": "rent-it",
+  "version": "1.0.0",
+  "description": "Rent items from people nearby",
+  "main": "Server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Milo Hartsoe",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
