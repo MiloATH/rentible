@@ -40,6 +40,9 @@ mongo.connect(dbURI, function(err, data) {
     console.log('Connected to mongodb');
 
     db = data;
+    db.collection('posts').ensureIndex({
+        loc: "2dsphere"
+    });
 
     passport.serializeUser((user, done) => {
         done(null, user._id);
@@ -114,6 +117,7 @@ mongo.connect(dbURI, function(err, data) {
                 failureRedirect: '/'
             }),
             (req, res, next) => {
+                console.log('logged in');
                 res.redirect('/profile');
             }
         );
@@ -127,7 +131,9 @@ mongo.connect(dbURI, function(err, data) {
 
     app.route('/profile')
         .get(ensureAuthenticated, (req, res) => {
-            res.render(process.cwd() + '/views/profile');
+            console.log(req.session);
+            res.end();
+            //res.render(process.cwd() + '/views/profile');
         });
 
     app.route('/logout')
@@ -150,6 +156,22 @@ mongo.connect(dbURI, function(err, data) {
         if (req.query.title) {
             search.title = req.query.title;
         }
+
+        if (req.query.dis && req.query.log && req.query.lat) {
+            var distance = +req.query.dis;
+            var longitude = +req.query.log;
+            var latitude = +req.query.lat;
+            var milesToRadian = function(miles) {
+                var earthRadiusInMiles = 3959;
+                return miles / earthRadiusInMiles;
+            };
+            search.loc = {
+                $geoWithin: {
+                    $centerSphere: [[longitude, latitude], milesToRadian(distance)]
+                }
+            };
+        }
+
         posts.find(search).toArray(function(err, docs) {
             if (err) {
                 console.log(err);
@@ -176,19 +198,23 @@ mongo.connect(dbURI, function(err, data) {
         var image_url = req.body.image_url;
         var title = req.body.title;
         var description = req.body.description;
-        var log = req.body.log; //Longitude
-        var lat = req.body.lat; //Latitude
-        var owner = req.body.owner; //Owner's username NOTE:could be problem with multiple people having the same username
-        var price = req.body.price; //Price per day
+        var log = +req.body.log; //Longitude
+        var lat = +req.body.lat; //Latitude
+        var ownerId = req.sesson.passport.user; //Owner's username NOTE:could be problem with multiple people having the same username
+        var price = req.body.price; //Price
+        var perTime = (req.body.perTime || '').toLowerCase(); //The unit for cost per time
 
         posts.insert({
             image_url: image_url,
             title: title,
             description: description,
-            log: log,
-            lat: lat,
-            owner: owner,
-            price: price
+            loc: {
+                type: "Point",
+                coordinates: [log, lat]
+            },
+            ownerId: ownerId,
+            price: price,
+            perTime: perTime
         }, function(err, result) {
             if (err) {
                 console.log(err);
