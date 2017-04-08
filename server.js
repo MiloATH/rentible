@@ -7,8 +7,13 @@ var ObjectID = require('mongodb').ObjectID;
 var LocalStrategy = require('passport-local');
 var path = require('path');
 
+
 var PORT = process.env.PORT || 3000;
 var dbURI = process.env.MONGOLAB_URI || require('./envVars.js').MLAB || 'mongodb://localhhost:27017/rent';
+
+var routes = require('./routes');
+var item = require('./routes/item');
+var payments = require('./payments.js');
 
 var app = express();
 var db;
@@ -21,6 +26,7 @@ app.use(bodyParser.urlencoded({
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
     secret: process.env.SESSION_SECRET || 'HideSecretsInPlainSight',
@@ -31,6 +37,23 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//METHODS for internal use
+function findUserByID(id, next) {
+    var ret = {};
+    var users = db.collection('users');
+    users.findOne({
+        _id: ObjectID(id)
+    }, function(err, user) {
+        if (err) {
+            ret.error = "id not found";
+            console.log(err);
+        } else {
+            console.log(user);
+            ret = user;
+        }
+        next(ret);
+    });
+}
 
 //DB Connection
 mongo.connect(dbURI, function(err, data) {
@@ -142,7 +165,14 @@ mongo.connect(dbURI, function(err, data) {
             res.redirect('/');
         });
 
+    app.get('/', routes.index);
+    app.get('/item', item.item);
 
+    //User request onetime entry key
+    //Params: email
+    /*app.route('/one-time-key').get((req,res) => {
+
+    });*/
 
 
     //API
@@ -167,7 +197,9 @@ mongo.connect(dbURI, function(err, data) {
             };
             search.loc = {
                 $geoWithin: {
-                    $centerSphere: [[longitude, latitude], milesToRadian(distance)]
+                    $centerSphere: [
+                        [longitude, latitude], milesToRadian(distance)
+                    ]
                 }
             };
         }
@@ -184,7 +216,53 @@ mongo.connect(dbURI, function(err, data) {
     app.post('/api/offer', ensureAuthenticated, function(req, res) {
         var posts = db.collection('posts');
 
-        var id = req.body.id; //id of post
+        var id = req.body.id; //id of post (_id)
+        if (id) {
+            //console.log("ObjectId is " + ObjectID));
+            posts.find({
+                "_id": ObjectID(id)
+            }).toArray(function(err, docs) {
+                if (err) {
+                    console.log(err);
+                    res.json({
+                        "error": "Invalid id in db. The item you are buying doesn't exist."
+                    });
+                } else if (docs.length != 1) {
+                    var docsError = "Invalid id in db. The number of items with that id is " + docs.length;
+                    res.json({
+                        "error": docsError
+                    });
+                } else {
+                    //Rent item
+                    //Make payment
+                    var item = docs[0];
+                    console.log("Buyer: " + req.session.passport.user);
+                    console.log(item);
+                    console.log("Seller: " + item.ownerId);
+                    if (req.session.passport.user && item.ownerId) {
+                        var buyerID = req.session.passport.user;
+                        var sellerId = item.ownerId;
+                        findUserByID(buyerID, function(buyer) {
+                            findUserByID(sellerId, function(seller) {
+                                console.log(buyer);
+                                console.log(seller);
+                                if (buyer.capitalOneCustomerID && seller.capitalOneCustomerID) {
+                                    payments.transfer(buyer.capitalOneCustomerID, seller.capitalOneCustomerID, item.price); //item.price should become item.price * number of days or hours rented
+                                }
+                            })
+                        });
+                    } else {
+                        res.json({
+                            "error": "Invalid buyer or seller _id."
+                        })
+                    }
+                }
+            })
+        } else {
+            res.json({
+                "error": "Invalid id. The item you are buying doesn't exist."
+            });
+        }
 
         console.log(req);
     });

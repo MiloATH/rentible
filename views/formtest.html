@@ -1,40 +1,46 @@
 <html>
+
 <body>
-  <form action="/api/add" method="post">
-    Image Url:<br>
-    <input type="text" name="image_url"><br>
-    Title:<br>
-    <input type="text" name="title"><br>
-    Description:<br>
-    <input type="text" name="description"><br>
-    Longitude:<br>
-    <input type="text" name="log"><br>
-    Latitude:<br>
-    <input type="text" name="lat"><br>
-    Owner:<br>
-    <input type="text" name="owner"><br>
-    Price:<br>
-    <input type="text" name="price"><br>
-    Per Time:<br>
-    <input type="text" name="perTime"><br>
-    <input type="submit" value="Submit">
-  </form>
-  <br>
-  <form action="/register" method="post">
-    REGISTER<br>
-    username:<br>
-    <input type="text" name="username"><br>
-    password:<br>
-    <input type="text" name="password"><br>
-    <input type="submit" value="Submit">
-  </form>
-  <form action="/login" method="post">
-    Login<br>
-    username:<br>
-    <input type="text" name="username"><br>
-    password:<br>
-    <input type="text" name="password"><br>
-    <input type="submit" value="Submit">
-  </form>
+    <form action="/api/add" method="post">
+        Image Url:<br>
+        <input type="text" name="image_url"><br> Title:
+        <br>
+        <input type="text" name="title"><br> Description:
+        <br>
+        <input type="text" name="description"><br> Longitude:
+        <br>
+        <input type="text" name="log"><br> Latitude:
+        <br>
+        <input type="text" name="lat"><br> Price:
+        <br>
+        <input type="text" name="price"><br> Per Time:<br>
+        <input type="text" name="perTime"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    <form action="/register" method="post">
+        REGISTER<br> username:
+        <br>
+        <input type="text" name="username"><br> password:
+        <br>
+        <input type="text" name="password"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <form action="/login" method="post">
+        Login<br> username:
+        <br>
+        <input type="text" name="username"><br> password:
+        <br>
+        <input type="text" name="password"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <form action="/api/offer" method="post">
+        Offer<br>
+        Item being purchased id: <br>
+        <input type="text" name="id"><br>
+        <input type="submit" value="Submit">
+    </form>
+
 </body>
+
 </html>

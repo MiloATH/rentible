@@ -13,7 +13,7 @@ class Games extends React.Component {
     )
   }
 }
-Category.propTypes = {
+Games.propTypes = {
 
 };
 

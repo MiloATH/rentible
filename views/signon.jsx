@@ -10,7 +10,7 @@ class SignOn extends React.Component {
     )
   }
 }
-Item.propTypes = {
+SignOn.propTypes = {
 
 };
 
