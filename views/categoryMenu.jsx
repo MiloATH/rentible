@@ -3,7 +3,7 @@ var Transportation = require('./transportation');
 var Memes = require('./memes');
 var Games = require('./games');
 
-class Item extends React.Component {
+class CategoryMenu extends React.Component {
   render() {
     return (
       <div>

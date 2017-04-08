@@ -13,7 +13,7 @@ class Memes extends React.Component {
     )
   }
 }
-Category.propTypes = {
+Memes.propTypes = {
 
 };
 

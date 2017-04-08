@@ -1,5 +1,4 @@
 var React = require('react');
-var Layout = require('./layout');
 var ItemGallery = require ('./itemGallery');
 var CategoryMenu = require ('./categoryMenu');
 var SignOn = require('./signon');
@@ -7,7 +6,18 @@ var SignOn = require('./signon');
 class Index extends React.Component {
   render() {
     return (
-      <Layout title={this.props.title}>
+      <div>
+        <head>
+          <title>{this.props.title}</title>
+          <link rel="stylesheet" href="/stylesheets/header.css" />
+          <link rel="stylesheet" href="/stylesheets/homepage.css" />
+          <script dangerouslySetInnerHTML={{__html:`
+            // This is making use of ES6 template strings, which allow for
+            // multiline strings. We specified "{jsx: {harmony: true}}" when
+            // creating the engine in app.js to get this feature.
+            console.log("hello world");
+          `}}/>
+        </head>
         <h1>
           {this.props.title}
         </h1>
@@ -17,8 +27,8 @@ class Index extends React.Component {
         <div id="bottomColor" />
         <div id="bottomCover" />
         <ItemGallery />
-      </Layout>
-    );
+      </div>
+    )
   }
 }
 

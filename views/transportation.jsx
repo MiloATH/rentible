@@ -13,7 +13,7 @@ class Transportation extends React.Component {
     )
   }
 }
-Category.propTypes = {
+Transportation.propTypes = {
 
 };
 
