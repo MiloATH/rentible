@@ -1,0 +1,30 @@
+body{
+  background-color:#c2b280;
+  overflow:0;
+  margin:0;
+  font-family:Sans-Serif;
+  font-size:60px;
+  color:#EEEEEE;
+}
+
+#logo{
+  width:100%;
+  top:0;
+}
+
+#info{
+  background-color:#EEEEEE;
+  color:black;
+  padding:30px;
+  padding-top:50px;
+  margin:30px;
+  box-shadow: 0 0 20px #210;
+}
+
+#download{
+  width:50%;
+  position:fixed;
+  text-align:center;
+  bottom:40px;
+  right:20px;
+}
