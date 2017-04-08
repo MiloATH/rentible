@@ -16,6 +16,10 @@ var db;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine());
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'HideSecretsInPlainSight',
   resave: true,
