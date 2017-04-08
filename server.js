@@ -8,7 +8,7 @@ var LocalStrategy = require('passport-local');
 var path = require('path');
 
 var PORT = process.env.PORT || 3000;
-var dbURI = process.env.MONGOLAB_URI || 'mongodb://localhhost:27017/rent';
+var dbURI = process.env.MONGOLAB_URI || require('./envVars.js').MLAB || 'mongodb://localhhost:27017/rent';
 
 var app = express();
 var db;
@@ -236,7 +236,7 @@ mongo.connect(dbURI, function(err, data) {
 
     //Testing
     app.get('/test', function(req, res) {
-        var file = path.join(__dirname, 'formtest.html');
+        var file = path.join(__dirname, 'views/formtest.html');
         console.log(file);
         res.sendFile(file, function(err) {
             if (err) {
