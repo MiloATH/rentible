@@ -1,0 +1,119 @@
+body{
+  margin:0;
+  font-family:Sans-Serif;
+  background-color:#CBB;
+}
+
+ul{
+  list-style-type: none;
+}
+
+.nearby {
+  display:inline-block;
+  vertical-align:top;
+  border:solid;
+  border-color: #DFDFDF;
+  background-color: #EFEFEF;
+
+  margin:10px;
+}
+
+.nearby > * > * {
+  display:block;
+}
+
+.neardescr{
+  display:block;
+}
+
+.description{
+  color:#2D2D2D;
+  font-size:14px;
+}
+
+#categories{
+  background-color:#F5F5F5;
+  display:inline-block;
+  position:absolute;
+  left:10px;
+  top: 80px;
+  
+  width:200px;
+  text-align:center;
+  
+  box-shadow:1px 1px 3px #333;
+}
+
+#categories > ul {
+  padding-left:5px;
+  padding-right:5px;
+}
+
+#categories > ul > *{
+  display:block;
+  color:#FF5722;
+  font-family:Courier;
+  font-weight:bold;
+  margin-top:2px;
+
+  text-decoration: none;
+  
+  font-size:20px;
+}
+
+#bullet{
+  font-size:25px;
+}
+
+#bottom{
+  position:absolute;
+  top:80px;
+  left:250px;
+  right:10%;
+}
+
+#bottom > * {
+  background-color:#F5F5F5;
+  display:inline-block;
+  margin-right:5px;
+  vertical-align:top;
+}
+
+#itemImg{
+  width:200px;
+  height:200px;
+  box-shadow:0 0 5px #444;
+}
+
+#info{
+  width:calc(100% - 220px);
+  box-shadow:0 0 5px #444;
+}
+
+#info > *{
+  display:inline-block;
+  vertical-align:top;
+  width:69%;
+}
+
+#buyholder{
+  width:30%;
+  text-align:right;
+}
+
+#buy{
+  text-align:left;
+  right:5px;
+  background-color:#a9a9a9;
+  margin:5px;
+  padding:5px;
+  font-size:20px;
+  box-shadow:1px 1px 4px #222;
+}
+
+#buy > button{
+  margin-left:calc(50% - 73px / 2);
+  
+  background-color: #57e83a;
+  box-shadow:0 0 5px #444;
+}
