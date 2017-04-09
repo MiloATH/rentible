@@ -104,16 +104,40 @@ ul{
 #buy{
   text-align:left;
   right:5px;
-  background-color:#a9a9a9;
+  border:solid 1px;
+  border-color:#666;
   margin:5px;
   padding:5px;
   font-size:20px;
-  box-shadow:1px 1px 4px #222;
 }
 
 #buy > button{
   margin-left:calc(50% - 73px / 2);
+  background-color: #6D4C41;
+  box-shadow:0 0 10px #6D4C41;
+}
+
+#meme{
+  position:absolute;
+  width:450px;
+//  height:500px;
+  top:260px;
+  display:none;
+  left:calc(50% - 450px / 2);
   
-  background-color: #57e83a;
-  box-shadow:0 0 5px #444;
+  background-color:#EFEFEF;
+  box-shadow:0 0 4px #444;
+  
+  padding:15px;
+}
+
+form > input[type="submit"], #meme > button{
+  margin-left:calc(50% - 60px / 2);
+  margin-top:30px;
+  
+  box-shadow:0 1px 5px #444;
+}
+
+h1, h2 {
+  color:#3E2723;
 }
