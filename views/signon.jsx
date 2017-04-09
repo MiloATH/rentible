@@ -4,8 +4,8 @@ class SignOn extends React.Component {
   render() {
     return (
       <div>
-        <button id="login">Login</button>
-        <button id="signup">Sign Up</button>
+        <a href="/login"><button id="login">Login</button></a>
+        <a href="/register"><button id="signup">Sign Up</button></a>
       </div>
     )
   }
