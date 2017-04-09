@@ -11,8 +11,6 @@ var path = require('path');
 var PORT = process.env.PORT || 3000;
 var dbURI = process.env.MONGOLAB_URI || require('./envVars.js').MLAB || 'mongodb://localhhost:27017/rent';
 
-var routes = require('./routes');
-var item = require('./routes/item');
 var payments = require('./payments.js');
 var emails = require('./emails.js');
 
@@ -235,12 +233,13 @@ mongo.connect(dbURI, function(err, data) {
             });
         });
     });
+
     app.get('/item', function(req, res) {
         res.render('item', {
             name: 'Example',
             description: 'Example description'
         });
-    };);
+    });
 
 
     //API
