@@ -9,7 +9,7 @@ class Index extends React.Component {
     return (
       <div>
         <Layout title={this.props.title}>
-          <Header />
+          <Header isLogin={this.props.isLogin}/>
           <CategoryMenu />
           {/* <div id="bottomColor" /> */}
           <div id="bottomCover" />
@@ -22,7 +22,8 @@ class Index extends React.Component {
 
 Index.propTypes = {
   title: React.PropTypes.string,
-  data: React.PropTypes.array
+  data: React.PropTypes.array,
+  isLogin: React.PropTypes.object
 };
 
 module.exports = Index;

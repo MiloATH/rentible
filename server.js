@@ -237,10 +237,15 @@ mongo.connect(dbURI, function(err, data) {
 
 
     app.get('/', function(req, res) {
+        var login = false;
+        if (req.user) {
+            login = true;
+        }
         find(req, res, function(result) {
             res.render('index', {
                 title: 'Rentible',
-                data: result
+                data: result,
+                isLogin: login
             });
         });
     });
