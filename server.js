@@ -323,7 +323,7 @@ mongo.connect(dbURI, function(err, data) {
         var description = req.body.description;
         var log = +req.body.log; //Longitude
         var lat = +req.body.lat; //Latitude
-        var ownerId = req.sesson.passport.user; //Owner's username NOTE:could be problem with multiple people having the same username
+        var ownerId = req.session.passport.user; //Owner's username NOTE:could be problem with multiple people having the same username
         var price = req.body.price; //Price
         var perTime = (req.body.perTime || '').toLowerCase(); //The unit for cost per time
 
