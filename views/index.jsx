@@ -13,7 +13,7 @@ class Index extends React.Component {
           <CategoryMenu />
           <div id="bottomColor" />
           <div id="bottomCover" />
-          <ItemGallery data={data} />
+          <ItemGallery data={this.props.data} />
         </Layout>
       </div>
     )
