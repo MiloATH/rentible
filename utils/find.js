@@ -1,3 +1,5 @@
+
+
 exports.find = function(req, res, next) {
     var posts = db.collection('posts');
     var search = {};
