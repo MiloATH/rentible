@@ -15,7 +15,6 @@ class ItemProfile extends React.Component {
                 <div id="price" >
                   ${this.props.datum.price} /{this.props.datum.perTime}
                 </div>
-                <br />
                 <form action="/api/offer" method="post">
                   <input name="id" value={this.props.datum._id} type="hidden" />
                   <input type="submit" value="Rent" style={{display:'inline-block'}} />

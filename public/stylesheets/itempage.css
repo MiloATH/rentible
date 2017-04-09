@@ -88,7 +88,7 @@ ul{
 
 #info{
   width:calc(100% - 220px);
-  
+
   text-align: center;
 }
 
@@ -113,10 +113,11 @@ ul{
   font-size:20px;
 }
 
-#buy > button{
-  margin-left:calc(50% - 73px / 2);
+#buy > form > input{
+  margin-left:calc(50% - 90% / 2);
   background-color: #FF1744;
   box-shadow:0 0 10px black;
+  width:90%;
 }
 
 #meme{

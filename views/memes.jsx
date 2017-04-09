@@ -6,7 +6,7 @@ class Memes extends React.Component {
       <div>
         <a href="/category/Memes">
           <li>
-            Memes
+            Tools
           </li>
         </a>
       </div>

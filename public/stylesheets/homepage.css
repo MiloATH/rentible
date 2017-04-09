@@ -1,13 +1,13 @@
 /*
-  
+
   Background: #FFF
-  
+
   Gray: #BDBDBD
 
   Light: #EFEFEF
-  
+
   Highlight: #FF5722
-  
+
 */
 
 body{
@@ -31,11 +31,11 @@ ul{
 
 #bottomColor{
   background-color:#EFEFEF;
-  
+
   box-shadow:0 0 4px #222;
-  
+
   z-index:-2;
-  
+
   right:50px;
   left:250px;
   height:100%;
@@ -63,7 +63,7 @@ ul{
   background-color: #EFEFEF;
 
   width:200px;
-  
+
   margin:10px;
 }
 
@@ -84,10 +84,10 @@ ul{
   position:absolute;
   left:10px;
   top: 90px;
-  
+
   width:200px;
   text-align:center;
-  
+
   box-shadow:1px 1px 3px #333;
 }
 
@@ -104,14 +104,14 @@ ul{
   margin-top:2px;
 
   text-decoration: none;
-  
+
   font-size:20px;
 }
 
 #bullet{
   font-size:40px;
   margin-bottom:-20px;
-  
+
   text-shadow: 0px 0px 1px #666;
 }
 
