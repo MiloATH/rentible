@@ -3,15 +3,15 @@ var React = require('react');
 class Item extends React.Component {
   render() {
     return (
-      <div>
-        <li class="nearby">
-          <img src="whatev" title="{this.props.name}" />
+      <div style={{display: 'inline-block'}}>
+        <li style={{margin: '10px', borderColor: '#dfdfdf', border: 'solid'}}>
+          <img src="./images/item-200.png" />
           <div class="neardescr">
             <div class="name">
-              {this.props.name}
+              {this.props.datum.title}
             </div>
             <div class="description">
-              {this.props.description}
+              {this.props.datum.description}
             </div>
           </div>
         </li>
@@ -19,9 +19,9 @@ class Item extends React.Component {
     )
   }
 }
+
 Item.propTypes = {
-  name: React.PropTypes.string,
-  description: React.PropTypes.string
+  datum: React.PropTypes.object
 };
 
 module.exports = Item;

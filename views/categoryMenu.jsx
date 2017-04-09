@@ -7,12 +7,13 @@ class CategoryMenu extends React.Component {
   render() {
     return (
       <div>
-        <div id="bullet">
-          &#8226;
+        <div id="categories">
+          <ul>
+            <Transportation />
+            <Memes />
+            <Games />
+          </ul>
         </div>
-        <Transportation />
-        <Memes />
-        <Games />
       </div>
     )
   }

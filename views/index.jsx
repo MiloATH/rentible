@@ -2,22 +2,18 @@ var React = require('react');
 var Layout = require('./layout');
 var ItemGallery = require ('./itemGallery');
 var CategoryMenu = require ('./categoryMenu');
-var SignOn = require('./signon');
+var Header = require ('./header');
 
 class Index extends React.Component {
   render() {
     return (
       <div>
         <Layout title={this.props.title}>
-          <h1>
-            {this.props.title}
-          </h1>
-          <p>Welcome to {this.props.title}</p>
-          <SignOn />
+          <Header />
           <CategoryMenu />
           <div id="bottomColor" />
           <div id="bottomCover" />
-          <ItemGallery />
+          <ItemGallery data={data} />
         </Layout>
       </div>
     )
@@ -25,7 +21,8 @@ class Index extends React.Component {
 }
 
 Index.propTypes = {
-  title: React.PropTypes.string
+  title: React.PropTypes.string,
+  data: React.PropTypes.array
 };
 
 module.exports = Index;
