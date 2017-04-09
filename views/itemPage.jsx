@@ -2,6 +2,7 @@ var React = require('react');
 var Layout = require('./layout');
 var Header = require('./header');
 var SimilarMenu = require('./similarMenu');
+var ItemProfile = require('./itemProfile');
 
 class ItemPage extends React.Component {
   render() {
@@ -9,10 +10,9 @@ class ItemPage extends React.Component {
       <Layout title={this.props.title}>
         <Header />
         <SimilarMenu />
-        <h1>
-          {this.props.title}
-        </h1>
-
+        <div id="bottomColor"></div>
+        <div id="bottomCover"></div>
+        <ItemProfile />
       </Layout>
     );
   }
