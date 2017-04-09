@@ -224,6 +224,9 @@ mongo.connect(dbURI, function(err, data) {
             res.redirect('/');
         });
 
+
+
+
     app.get('/', function(req, res) {
         find(req, res, function(result) {
             res.render('index', {
@@ -232,13 +235,12 @@ mongo.connect(dbURI, function(err, data) {
             });
         });
     });
-    app.get('/item', item.item);
-
-    //User request onetime entry key
-    //Params: email
-    /*app.route('/one-time-key').get((req,res) => {
-
-    });*/
+    app.get('/item', function(req, res) {
+        res.render('item', {
+            name: 'Example',
+            description: 'Example description'
+        });
+    };);
 
 
     //API
