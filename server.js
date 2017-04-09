@@ -248,18 +248,24 @@ mongo.connect(dbURI, function(err, data) {
     app.get('/item/:id', function(req, res) {
         var id = req.params.id;
         var posts = db.collection('posts');
-        posts.findOne({_id: ObjectID(id)}, function(err, result) {
+        posts.findOne({
+            _id: ObjectID(id)
+        }, function(err, result) {
             if (err) {
                 console.log(err);
                 res.send(err);
             }
-            res.render('itemPage', {
-                title: 'Rentible',
-                datum: result
+            posts.find({}).toArray(function(err, docs) {
+                res.render('itemPage', {
+                    title: 'Rentible',
+                    datum: result,
+                    similarData1: docs[0],
+                    similarData2: docs[1],
+                    similarData3: docs[2]
+                });
             });
         });
     });
-
 
     //API
     //METHODS

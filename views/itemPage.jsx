@@ -9,7 +9,7 @@ class ItemPage extends React.Component {
     return (
       <Layout title={this.props.title}>
         <Header />
-        <SimilarMenu />
+        <SimilarMenu datum1={this.props.similarData1} datum2={this.props.similarData2} datum3={this.props.similarData3}/>
         <div id="bottomColor"></div>
         <div id="bottomCover"></div>
         <ItemProfile datum={this.props.datum}/>
@@ -20,7 +20,10 @@ class ItemPage extends React.Component {
 
 ItemPage.propTypes = {
   title: React.PropTypes.string,
-  datum: React.PropTypes.object
+  datum: React.PropTypes.object,
+  similarData1: React.PropTypes.object,
+  similarData2: React.PropTypes.object,
+  similarData3: React.PropTypes.object
 };
 
 module.exports = ItemPage;

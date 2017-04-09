@@ -5,14 +5,14 @@ class Similar extends React.Component {
     return (
       <div>
         <li class="nearby">
-          <a href="item/{{ ID }}">
-            <img src="whatev" title="{{ ITEM_NAME }}" />
+          <a href='item/{this.props.data._id}'>
+            <img src={this.props.data.image_url} title={this.props.data.title} width='182'/>
             <div class="neardescr">
               <div class="name">
-                ## ITEM_NAME ##
+                {this.props.data.title}
               </div>
               <div class="description">
-                 ## ITEM_DESCRIPTION ##
+                 {this.props.data.description}
               </div>
             </div>
           </a>
@@ -22,6 +22,7 @@ class Similar extends React.Component {
   }
 }
 Similar.propTypes = {
+  data: React.PropTypes.object
 };
 
 module.exports = Similar;

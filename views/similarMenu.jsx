@@ -10,9 +10,9 @@ class SimilarMenu extends React.Component {
             Similar
           </div>
           <ul>
-            <Similar />
-            <Similar />
-            <Similar />
+            <Similar data={this.props.datum1}/>
+            <Similar data={this.props.datum2}/>
+            <Similar data={this.props.datum3}/>
           </ul>
         </div>
       </div>
@@ -20,7 +20,9 @@ class SimilarMenu extends React.Component {
   }
 }
 SimilarMenu.propTypes = {
-
+  datum1: React.PropTypes.object,
+  datum2: React.PropTypes.object,
+  datum3: React.PropTypes.object
 };
 
 module.exports = SimilarMenu;
