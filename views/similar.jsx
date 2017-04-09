@@ -12,7 +12,7 @@ class Similar extends React.Component {
                 {this.props.data.title}
               </div>
               <div class="description">
-                 {this.props.data.description}
+                {this.props.data.description}
               </div>
             </div>
           </a>

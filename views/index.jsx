@@ -11,7 +11,7 @@ class Index extends React.Component {
         <Layout title={this.props.title}>
           <Header />
           <CategoryMenu />
-          <div id="bottomColor" />
+          {/* <div id="bottomColor" /> */}
           <div id="bottomCover" />
           <ItemGallery data={this.props.data} />
         </Layout>
