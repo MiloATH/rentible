@@ -1,5 +1,9 @@
 exports.index = function(req, res) {
-    res.render('index', {
-        title: 'Rentible'
-    });
+
+    find(req, res, function(result) {
+        res.render('index', {
+            title: 'Rentible',
+            data: result
+        });
+    })
 };

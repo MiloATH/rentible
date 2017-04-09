@@ -13,7 +13,10 @@ var dbURI = process.env.MONGOLAB_URI || require('./envVars.js').MLAB || 'mongodb
 
 var routes = require('./routes');
 var item = require('./routes/item');
+var find = require('./utils/find.js');
 var payments = require('./payments.js');
+var emails = require('./emails.js');
+
 
 var app = express();
 var db;
@@ -112,45 +115,52 @@ mongo.connect(dbURI, function(err, data) {
     app.route('/register')
         .post((req, res, next) => {
                 console.log("Trying to register");
-                db.collection('users').findOne({
-                    username: req.body.username
-                }, function(err, user) {
-                    if (err) {
-                        next(err);
-                    } else if (user) {
-                        res.redirect('/');
-                    } else {
-                        var first_name = req.body.first_name || req.body.username;
-                        var last_name = req.body.last_name || 'none';
-                        console.log("first name is " + first_name);
-                        payments.createCustomer(first_name,
-                            last_name,
-                            req.body.street_number || '1',
-                            req.body.street_name || 'none',
-                            req.body.city || 'McLean',
-                            req.body.state || 'VA',
-                            req.body.zip || '22102',
-                            function(result) {
-                                console.log('results of capital one ' + result);
+                if (req.body.username && req.body.password && req.body.email) {
+                    db.collection('users').findOne({
+                        username: req.body.username
+                    }, function(err, user) {
+                        if (err) {
+                            next(err);
+                        } else if (user) {
+                            res.redirect('/');
+                        } else {
+                            var first_name = req.body.first_name || req.body.username;
+                            var last_name = req.body.last_name || 'none';
+                            console.log("first name is " + first_name);
+                            payments.createCustomer(first_name,
+                                last_name,
+                                req.body.street_number || '1',
+                                req.body.street_name || 'none',
+                                req.body.city || 'McLean',
+                                req.body.state || 'VA',
+                                req.body.zip || '22102',
+                                function(result) {
+                                    console.log('results of capital one ' + result);
 
-                                db.collection('users').insertOne({
-                                        username: req.body.username,
-                                        password: req.body.password,
-                                        capitalOneCustomerID: result.body.objectCreated._id
-                                    },
-                                    (err, doc) => {
-                                        if (err) {
-                                            res.redirect('/');
-                                        } else {
-                                            next(null, user);
+                                    db.collection('users').insertOne({
+                                            username: req.body.username,
+                                            password: req.body.password,
+                                            capitalOneCustomerID: result.body.objectCreated._id,
+                                            email: req.body.email
+                                        },
+                                        (err, doc) => {
+                                            if (err) {
+                                                res.redirect('/');
+                                            } else {
+                                                next(null, user);
+                                            }
                                         }
-                                    }
-                                )
+                                    )
 
-                            });
+                                });
 
-                    }
-                })
+                        }
+                    })
+                } else {
+                    res.json({
+                        "error": "Invalid input. Need email, username, and password"
+                    })
+                }
             },
             passport.authenticate('local', {
                 failureRedirect: '/'
@@ -199,34 +209,8 @@ mongo.connect(dbURI, function(err, data) {
     //Get posts
     //Sort by location
     app.get('/api/find', function(req, res) {
-        var posts = db.collection('posts');
-        var search = {};
-        if (req.query.title) {
-            search.title = req.query.title;
-        }
-
-        if (req.query.dis && req.query.log && req.query.lat) {
-            var distance = +req.query.dis;
-            var longitude = +req.query.log;
-            var latitude = +req.query.lat;
-            var milesToRadian = function(miles) {
-                var earthRadiusInMiles = 3959;
-                return miles / earthRadiusInMiles;
-            };
-            search.loc = {
-                $geoWithin: {
-                    $centerSphere: [
-                        [longitude, latitude], milesToRadian(distance)
-                    ]
-                }
-            };
-        }
-
-        posts.find(search).toArray(function(err, docs) {
-            if (err) {
-                console.log(err);
-            }
-            res.json(docs);
+        find.find(req, res, function(results) {
+            res.json(results);
         });
     });
 
@@ -267,6 +251,7 @@ mongo.connect(dbURI, function(err, data) {
                                 console.log(seller);
                                 if (buyer.capitalOneCustomerID && seller.capitalOneCustomerID) {
                                     payments.transfer(buyer.capitalOneCustomerID, seller.capitalOneCustomerID, item.price * times, function(result) {
+                                        emails.purchaseMadeEmail(buyer, seller, item, result, times);
                                         res.json(result);
                                     });
                                 }
