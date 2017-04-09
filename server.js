@@ -109,7 +109,6 @@ mongo.connect(dbURI, function(err, data) {
         }
     ));
 
-
     app.route('/register')
         .post((req, res, next) => {
                 console.log("Trying to register");
@@ -121,18 +120,35 @@ mongo.connect(dbURI, function(err, data) {
                     } else if (user) {
                         res.redirect('/');
                     } else {
-                        db.collection('users').insertOne({
-                                username: req.body.username,
-                                password: req.body.password
-                            },
-                            (err, doc) => {
-                                if (err) {
-                                    res.redirect('/');
-                                } else {
-                                    next(null, user);
-                                }
-                            }
-                        )
+                        var first_name = req.body.first_name || req.body.username;
+                        var last_name = req.body.last_name || 'none';
+                        console.log("first name is " + first_name);
+                        payments.createCustomer(first_name,
+                            last_name,
+                            req.body.street_number || '1',
+                            req.body.street_name || 'none',
+                            req.body.city || 'McLean',
+                            req.body.state || 'VA',
+                            req.body.zip || '22102',
+                            function(result) {
+                                console.log('results of capital one ' + result);
+
+                                db.collection('users').insertOne({
+                                        username: req.body.username,
+                                        password: req.body.password,
+                                        capitalOneCustomerID: result.body.objectCreated._id
+                                    },
+                                    (err, doc) => {
+                                        if (err) {
+                                            res.redirect('/');
+                                        } else {
+                                            next(null, user);
+                                        }
+                                    }
+                                )
+
+                            });
+
                     }
                 })
             },
@@ -144,6 +160,8 @@ mongo.connect(dbURI, function(err, data) {
                 res.redirect('/profile');
             }
         );
+
+
 
     app.route('/login')
         .post(passport.authenticate('local', {
@@ -217,7 +235,8 @@ mongo.connect(dbURI, function(err, data) {
         var posts = db.collection('posts');
 
         var id = req.body.id; //id of post (_id)
-        if (id) {
+        var times = req.body.times; //Number of times for the rental
+        if (id && times) {
             //console.log("ObjectId is " + ObjectID));
             posts.find({
                 "_id": ObjectID(id)
@@ -247,7 +266,9 @@ mongo.connect(dbURI, function(err, data) {
                                 console.log(buyer);
                                 console.log(seller);
                                 if (buyer.capitalOneCustomerID && seller.capitalOneCustomerID) {
-                                    payments.transfer(buyer.capitalOneCustomerID, seller.capitalOneCustomerID, item.price); //item.price should become item.price * number of days or hours rented
+                                    payments.transfer(buyer.capitalOneCustomerID, seller.capitalOneCustomerID, item.price * times, function(result) {
+                                        res.json(result);
+                                    });
                                 }
                             })
                         });
@@ -260,7 +281,7 @@ mongo.connect(dbURI, function(err, data) {
             })
         } else {
             res.json({
-                "error": "Invalid id. The item you are buying doesn't exist."
+                "error": "Invalid id. The item you are buying doesn't exist or you forgot the number of times you rented."
             });
         }
 
