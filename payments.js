@@ -2,9 +2,9 @@ var request = require('superagent');
 var capitalOneLink = 'http://api.reimaginebanking.com/';
 var endKey = '?key=' + process.env.CapitalOneKey;
 
-exports.transfer = function(buyer, seller, price) {
+exports.transfer = function(buyer, seller, price, next) {
     console.log('Transfers $' + price + ' from buyer: ' + buyer + ' to seller: ' + seller);
-    var transferLink = capitalOneLink + 'accounts/' + buyer + '/transfer' + endKey;
+    var transferLink = capitalOneLink + 'accounts/' + buyer + '/transfers' + endKey;
     request.post(transferLink)
         .set('Content-Type', 'application/json')
         .send({
@@ -14,17 +14,29 @@ exports.transfer = function(buyer, seller, price) {
             "transaction_date": new Date().toISOString().substring(0, 10),
             "description": "Rental from rentible"
         })
-        .end(function(res) {
-            console.log("Transfer transcript:" + res);
-            if (res.status == 404) {
-                return {
-                    "error": "account(s) not found."
-                };
+        .end(function(err, result) {
+            console.log(result.body);
+            if (result.code == 404) {
+                console.log(err);
             } else {
-                return {
-                    "Succes": "no error"
-                };
+                next(result);
             }
+        })
+};
+
+function createAccount(id, next) {
+    var accountLink = capitalOneLink + 'customers/' + id + '/accounts' + endKey;
+    console.log(accountLink);
+    request.post(accountLink)
+        .set('Content-Type', 'application/json')
+        .send({
+            "type": "Savings",
+            "nickname": "rentible",
+            "rewards": 1000,
+            "balance": 1000
+        })
+        .end(function(err, result) {
+            return next(result);
         })
 };
 
@@ -46,7 +58,9 @@ exports.createCustomer = function(first_name, last_name, street_number, street_n
                 "zip": zip
             }
         })
-        .end(function(err,result) {
-            return next(result);
-        })
+        .end(function(err, result) {
+            createAccount(result.body.objectCreated._id, function(accountResults) {
+                return next(accountResults);
+            });
+        });
 };
