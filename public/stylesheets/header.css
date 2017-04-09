@@ -49,3 +49,8 @@ button, input[type=submit]{
   vertical-align:top;
   padding-top:13px;
 }
+
+a{
+  text-decoration: none;
+  color:inherit;
+}

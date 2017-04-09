@@ -283,7 +283,7 @@ mongo.connect(dbURI, function(err, data) {
         var posts = db.collection('posts');
 
         var id = req.body.id; //id of post (_id)
-        var times = req.body.times; //Number of times for the rental
+        var times = req.body.times || 1; //Number of times for the rental
         if (id && times) {
             //console.log("ObjectId is " + ObjectID));
             posts.find({

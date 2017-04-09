@@ -6,7 +6,7 @@ class Header extends React.Component {
       <div id="header">
         <div id="titletext">
           <span style={{borderColor: "white", border: 'solid 4px', padding: '8px', marginTop: '4px'}}>
-            Rentible
+            <a href="/" style={{textDecoration: "none",color: "inherit"}}>Rentible</a>
           </span>
         </div>
         <div id="signon">

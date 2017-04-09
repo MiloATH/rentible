@@ -5,7 +5,7 @@ class Similar extends React.Component {
     return (
       <div>
         <li class="nearby">
-          <a href='item/{this.props.data._id}'>
+          <a href={this.props.data._id}>
             <img src={this.props.data.image_url} title={this.props.data.title} width='182'/>
             <div class="neardescr">
               <div class="name">

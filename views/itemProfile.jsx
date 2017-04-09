@@ -16,16 +16,18 @@ class ItemProfile extends React.Component {
                   ${this.props.datum.price} /{this.props.datum.perTime}
                 </div>
                 <br />
-                <button id="buyBtn" onclick="(function(){document.getElementById('meme').style.display = 'block';})()">Rent</button>
-              </div>
+                <form action="/api/offer" method="post">
+                  <input name="id" value={this.props.datum._id} type="hidden" />
+                  <input type="submit" value="Rent" style={{display:'inline-block'}} />
+                </form></div>
             </div>
           </div>
           <br />
           <br />
 
             <img title={this.props.datum.title} src={this.props.datum.image_url} style={{display: "block", margin: "auto", width:"70%"}} />
-
-          
+            <br/>
+          <iframe style={{width: '70%'}} height='400' src={"https://www.google.com/maps/embed/v1/view?key=AIzaSyCN5uTcIXMJBUxjiUyUJmeTmJxmOnYkb20&zoom=15&center=" + this.props.datum.loc.coordinates[0] + ',' + this.props.datum.loc.coordinates[1]}></iframe>
         </div>
         <div id="meme">
           <form action="/api/offer">
