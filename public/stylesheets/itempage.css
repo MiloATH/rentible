@@ -1,7 +1,7 @@
 body{
   margin:0;
   font-family:Sans-Serif;
-  background-color:#CBB;
+  background-color:#F3F3F3;
 }
 
 ul{
@@ -51,7 +51,7 @@ ul{
 
 #categories > ul > *{
   display:block;
-  color:#FF5722;
+  color:#FF1744;
   font-family:Courier;
   font-weight:bold;
   margin-top:2px;
@@ -83,11 +83,13 @@ ul{
   width:200px;
   height:200px;
   box-shadow:0 0 5px #444;
+  text-align: center;
 }
 
 #info{
   width:calc(100% - 220px);
   box-shadow:0 0 5px #444;
+  text-align: center;
 }
 
 #info > *{
@@ -113,8 +115,8 @@ ul{
 
 #buy > button{
   margin-left:calc(50% - 73px / 2);
-  background-color: #6D4C41;
-  box-shadow:0 0 10px #6D4C41;
+  background-color: #FF1744;
+  box-shadow:0 0 10px black;
 }
 
 #meme{
