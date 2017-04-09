@@ -6,21 +6,21 @@ class ItemProfile extends React.Component {
       <div>
         <div id="bottom">
           <div id="itemImg">
-            <img title={this.props.title} src="" />
+            <img title={this.props.datum.title} src={this.props.datum.image_url} />
           </div>
           <div id="info">
             <div>
-              <h1>{this.props.title}</h1>
-              <h2>{this.props.ownerId}</h2>
-              <div id="maindescr">{this.props.description}</div>
+              <h1>{this.props.datum.title}</h1>
+              <h2>{this.props.datum.ownerId}</h2>
+              <div id="maindescr">{this.props.datum.description}</div>
             </div>
             <div id="buyholder">
               <div id="buy">
                 <div id="price">
-                  {this.props.price}
+                  {this.props.datum.price}
                 </div>
                 <div>
-                  {this.props.perTime}
+                  {this.props.datum.perTime}
                 </div>
                 <button id="buyBtn" onclick="(function(){document.getElementById('meme').style.display = 'block';})()">Rent</button>
               </div>
@@ -30,11 +30,11 @@ class ItemProfile extends React.Component {
         <div id="meme">
           <form action="/api/offer">
             <h1>Confirmation</h1>
-            <h2>Are you sure you want to rent {this.props.title} from seller {this.props.ownerId} for <input name="days" value="" type="text" style="width:30px;padding:5px" /> days?</h2>
-            <input name="id" value={this.props._id} type="hidden" /> 
-            <input type="submit" value="Yes" style="display:inline-block;" /> 
+            <h2>Are you sure you want to rent {this.props.title} from seller {this.props.datum.ownerId} for <input name="days" value="" type="text" style={{width: '30px', padding:'5px'}} /> days?</h2>
+            <input name="id" value={this.props.datum._id} type="hidden" />
+            <input type="submit" value="Yes" style={{display:'inline-block'}} />
           </form>
-          <button style="display:inline-block" id="no" onclick="(function(){document.getElementById('meme').style.display = 'none';})()">No</button> 
+          <button style={{display: 'inline-block'}} id="no" onclick="(function(){document.getElementById('meme').style.display = 'none';})()">No</button>
         </div>
       </div>
     );
@@ -42,12 +42,7 @@ class ItemProfile extends React.Component {
 }
 
 ItemProfile.propTypes = {
-  title: React.PropTypes.string,
-  ownerId: React.PropTypes.string,
-  description: React.PropTypes.string,
-  price: React.PropTypes.string,
-  perTime: React.PropTypes.string,
-  itemId: React.PropTypes.string
+  datum: React.PropTypes.object
 };
 
 module.exports = ItemProfile;

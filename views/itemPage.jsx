@@ -12,14 +12,15 @@ class ItemPage extends React.Component {
         <SimilarMenu />
         <div id="bottomColor"></div>
         <div id="bottomCover"></div>
-        <ItemProfile />
+        <ItemProfile datum={this.props.datum}/>
       </Layout>
     );
   }
 }
 
 ItemPage.propTypes = {
-  title: React.PropTypes.string
+  title: React.PropTypes.string,
+  datum: React.PropTypes.object
 };
 
 module.exports = ItemPage;

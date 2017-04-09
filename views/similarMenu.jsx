@@ -1,7 +1,7 @@
 var React = require('react');
 var Similar = require('./similar');
 
-class CategoryMenu extends React.Component {
+class SimilarMenu extends React.Component {
   render() {
     return (
       <div>

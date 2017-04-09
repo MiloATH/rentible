@@ -253,7 +253,7 @@ mongo.connect(dbURI, function(err, data) {
                 console.log(err);
                 res.send(err);
             }
-            res.render('item', {
+            res.render('itemPage', {
                 title: 'Rentible',
                 datum: result
             });

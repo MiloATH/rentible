@@ -9,10 +9,10 @@ class Similar extends React.Component {
             <img src="whatev" title="{{ ITEM_NAME }}" />
             <div class="neardescr">
               <div class="name">
-                {{ ITEM_NAME }}
+                ## ITEM_NAME ##
               </div>
               <div class="description">
-                {{ ITEM_DESCRIPTION }}
+                 ## ITEM_DESCRIPTION ##
               </div>
             </div>
           </a>
@@ -22,7 +22,6 @@ class Similar extends React.Component {
   }
 }
 Similar.propTypes = {
-
 };
 
 module.exports = Similar;
