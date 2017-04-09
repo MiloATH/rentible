@@ -5,7 +5,7 @@ class Item extends React.Component {
     return (
       <div style={{display: 'inline-block'}}>
         <li style={{margin: '10px', borderColor: '#dfdfdf', border: 'solid'}}>
-          <img src="./images/item-200.png" />
+          <img src={this.props.datum.image_url} />
           <div class="neardescr">
             <div class="name">
               {this.props.datum.title}

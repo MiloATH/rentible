@@ -10,8 +10,8 @@ class Header extends React.Component {
           </span>
         </div>
         <div id="signon">
-          <button id="login">Login</button>
-          <button id="signup">Sign Up</button>
+          <a href="/login"><button id="login">Login</button></a>
+          <a href="/signup"><button id="signup">Sign Up</button></a>
         </div>
       </div>
     )

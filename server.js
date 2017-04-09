@@ -8,6 +8,7 @@ var LocalStrategy = require('passport-local');
 var path = require('path');
 
 
+
 var PORT = process.env.PORT || 3000;
 var dbURI = process.env.MONGOLAB_URI || require('./envVars.js').MLAB || 'mongodb://localhhost:27017/rent';
 
@@ -141,9 +142,14 @@ mongo.connect(dbURI, function(err, data) {
         }
     ));
 
-    app.route('/register')
+    app.route('/signup')
+        .get((req, res) => {
+            res.render('signupPage', {
+                title: 'Rentible'
+            });
+        })
         .post((req, res, next) => {
-                console.log("Trying to register");
+                console.log("Trying to signup");
                 if (req.body.username && req.body.password && req.body.email) {
                     db.collection('users').findOne({
                         username: req.body.username
@@ -203,6 +209,11 @@ mongo.connect(dbURI, function(err, data) {
 
 
     app.route('/login')
+        .get((req, res) => {
+            res.render('loginPage', {
+                title: 'Rentible'
+            });
+        })
         .post(passport.authenticate('local', {
             failureRedirect: '/'
         }), (req, res) => {
@@ -211,7 +222,7 @@ mongo.connect(dbURI, function(err, data) {
 
     app.route('/profile')
         .get(ensureAuthenticated, (req, res) => {
-            console.log(req.session);
+            res.redirect('/');
             res.end();
             //res.render(process.cwd() + '/views/profile');
         });
@@ -234,10 +245,18 @@ mongo.connect(dbURI, function(err, data) {
         });
     });
 
-    app.get('/item', function(req, res) {
-        res.render('item', {
-            name: 'Example',
-            description: 'Example description'
+    app.get('/item/:id', function(req, res) {
+        var id = req.params.id;
+        var posts = db.collection('posts');
+        posts.findOne({_id: ObjectID(id)}, function(err, result) {
+            if (err) {
+                console.log(err);
+                res.send(err);
+            }
+            res.render('item', {
+                title: 'Rentible',
+                datum: result
+            });
         });
     });
 
