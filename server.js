@@ -316,7 +316,7 @@ mongo.connect(dbURI, function(err, data) {
                                 if (buyer.capitalOneCustomerID && seller.capitalOneCustomerID) {
                                     payments.transfer(buyer.capitalOneCustomerID, seller.capitalOneCustomerID, item.price * times, function(result) {
                                         emails.purchaseMadeEmail(buyer, seller, item, result, times);
-                                        res.json(result);
+                                        res.redirect('/');
                                     });
                                 }
                             })
