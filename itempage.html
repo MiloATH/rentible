@@ -108,10 +108,22 @@
             <div id="price">
               {{ PRICE (Formatted) }}
             </div>
-            <button id="buyBtn">Rent</button>
+            <button id="buyBtn" onclick="(function(){document.getElementById('meme').style.display = 'block';})()">Rent</button>
           </div>
         </div>
       </div>
     </div>
+    
+    <div id="meme">
+      <form action="/api/offer">
+          <h1>Confirmation</h1>
+          <h2>Are you sure you want to rent {{ ITEM_NAME }} from {{ ITEM_VENDOR }} for <input name="days" value="" type="text" style="width:30px;padding:5px" /> days?</h2>
+          
+          <input name="id" value="{{ ITEM_ID }}" type="hidden" />
+          
+          <input type="submit" value="Yes" style="display:inline-block;"/> 
+        </form>
+        <button style="display:inline-block" id="no" onclick="(function(){document.getElementById('meme').style.display = 'none';})()">No</button> 
+      </div>
   </body>
 </html>
